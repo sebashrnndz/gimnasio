@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento de Ejercicios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Seguimiento</h1>
+            <div class="theme-toggle">
+                <span>☀️</span>
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span>🌙</span>
+            </div>
+        </div>
+        
+        <form id="exercise-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="exercise-name">Nombre del ejercicio</label>
+                    <input type="text" id="exercise-name" placeholder="Nombre del ejercicio" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="day-select">Día</label>
+                    <select id="day-select" required>
+                        <option value="Lunes">Lunes</option>
+                        <option value="Martes">Martes</option>
+                        <option value="Miércoles">Miércoles</option>
+                        <option value="Jueves">Jueves</option>
+                        <option value="Viernes">Viernes</option>
+                        <option value="Sábado">Sábado</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="weight">Peso (kg)</label>
+                    <input type="number" id="weight" placeholder="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="sets">Series</label>
+                    <input type="number" id="sets" placeholder="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reps">Repeticiones</label>
+                    <input type="number" id="reps" placeholder="0" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Complejidad</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="complexity" value="Fácil">
+                            <span class="radio-text">Fácil</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="complexity" value="Medio" checked>
+                            <span class="radio-text">Medio</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="complexity" value="Difícil">
+                            <span class="radio-text">Difícil</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-button">Agregar Ejercicio</button>
+        </form>
+
+        <div class="tabs">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-day="Lunes">Lun</button>
+                <button class="tab-button" data-day="Martes">Mar</button>
+                <button class="tab-button" data-day="Miércoles">Mié</button>
+                <button class="tab-button" data-day="Jueves">Jue</button>
+                <button class="tab-button" data-day="Viernes">Vie</button>
+                <button class="tab-button" data-day="Sábado">Sáb</button>
+            </div>
+            <div id="exercises-list"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+
