@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seguimiento de Ejercicios</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <h1>Seguimiento</h1>
+
+            <button class="modal-peso" id="abrirModal">Mi peso</button>
+
+            <div id="miModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Registro de Peso</h2>
+                    <form id="formPeso">
+                        <label for="peso">Peso (kg):</label>
+                        <input type="number" id="peso" step="0.1" required>
+                        <label for="fecha">Fecha:</label>
+                        <input type="date" id="fecha" required>
+                        <button class="submit-button"  type="submit">Guardar Peso</button>
+                    </form>
+                    <div id="registros"></div>
+                </div>
+            </div>
+
             <div class="theme-toggle">
                 <span>☀️</span>
                 <label class="switch">
@@ -19,14 +39,14 @@
                 <span>🌙</span>
             </div>
         </div>
-        
+
         <form id="exercise-form">
             <div class="form-grid">
                 <div class="form-group">
                     <label for="exercise-name">Nombre del ejercicio</label>
                     <input type="text" id="exercise-name" placeholder="Nombre del ejercicio" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label for="day-select">Día</label>
                     <select id="day-select" required>
@@ -90,5 +110,5 @@
     </div>
     <script src="script.js"></script>
 </body>
-</html>
 
+</html>

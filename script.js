@@ -130,3 +130,64 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector(`[data-day="${defaultDay}"]`).classList.add('active');
 });
 
+const modal = document.getElementById("miModal");
+        const btn = document.getElementById("abrirModal");
+        const span = document.getElementsByClassName("close")[0];
+        const form = document.getElementById("formPeso");
+        const registrosDiv = document.getElementById("registros");
+
+        let registros = JSON.parse(localStorage.getItem('registrosPeso')) || [];
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+            mostrarRegistros();
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        form.onsubmit = function(e) {
+            e.preventDefault();
+            const peso = document.getElementById("peso").value;
+            const fecha = document.getElementById("fecha").value;
+            
+            registros.push({id: Date.now(), peso, fecha});
+            localStorage.setItem('registrosPeso', JSON.stringify(registros));
+            
+            form.reset();
+            mostrarRegistros();
+        }
+
+        function mostrarRegistros() {
+            registrosDiv.innerHTML = "<h3>Registros:</h3>";
+            registros.forEach(registro => {
+                const div = document.createElement('div');
+                div.className = 'registro';
+                div.innerHTML = `
+                    <span>${registro.peso} kg - ${formatearFecha(registro.fecha)}</span>
+                    <button class="delete-button" data-id="${registro.id}">Eliminar</button>
+                `;
+                registrosDiv.appendChild(div);
+            });
+
+            document.querySelectorAll('.eliminar').forEach(button => {
+                button.onclick = function() {
+                    const id = this.getAttribute('data-id');
+                    registros = registros.filter(registro => registro.id != id);
+                    localStorage.setItem('registrosPeso', JSON.stringify(registros));
+                    mostrarRegistros();
+                }
+            });
+        }
+
+        function formatearFecha(fecha) {
+            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(fecha).toLocaleDateString('es-ES', opciones);
+        }

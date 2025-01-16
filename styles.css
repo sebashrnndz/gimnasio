@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
 
 
-*{
+* {
     font-family: "Lexend", serif;
 }
 
@@ -11,11 +11,13 @@
     --background: #ffffff;
     --text: #000000;
     --border: #e5e7eb;
-    --input-bg: #ffffff;
+    --input-bg: #EEEEEE;
     --button-bg: #18181b;
     --button-text: #ffffff;
     --tab-active: #000000;
     --tab-inactive: #6b7280;
+    --button-mine: #eeeeee;
+    --button-dlt-text: #c71616;
 }
 
 body.dark-mode {
@@ -27,6 +29,8 @@ body.dark-mode {
     --button-text: #000000;
     --tab-active: #ffffff;
     --tab-inactive: #71717a;
+    --button-mine: #27272a;
+    --button-dlt-text: #c71616;
 }
 
 * {
@@ -104,11 +108,11 @@ h1 {
     border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: #18181b;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     transform: translateX(24px);
 }
 
@@ -132,6 +136,7 @@ label {
 
 input[type="text"],
 input[type="number"],
+input[type="date"],
 select {
     width: 100%;
     padding: 0.5rem;
@@ -221,16 +226,21 @@ select {
 }
 
 .exercise-item {
-    border: 1px solid var(--border);
+    border: 2px solid var(--border);
     border-radius: 0.5rem;
     padding: 1rem;
     margin-bottom: 1rem;
+    /* background-color: var(); */
 }
 
 .exercise-item h3 {
     margin-bottom: 1rem;
     font-size: 1rem;
     font-weight: 600;
+    background-color: var(--input-bg);
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+
 }
 
 .entry {
@@ -245,10 +255,10 @@ select {
 }
 
 .delete-button {
-    font-family:"Lexend", serif ;
+    font-family: "Lexend", serif;
     padding: 0.25rem 0.5rem;
-    background-color: #999999;
-    color: white;
+    background-color: var(--button-mine);
+    color: var(--button-dlt-text);
     border: none;
     border-radius: 0.375rem;
     font-size: 0.75rem;
@@ -260,6 +270,103 @@ select {
 .delete-button:hover {
     opacity: 0.9;
 }
+
+/* body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+} */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 998;
+}
+
+.modal-peso {
+    font-family: "Lexend", serif;
+    width: 20%;
+    padding: 0.5rem;
+    background-color: var(--button-mine);
+    color: var(--text);
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+}
+
+h2 {
+    color: var(--text);
+}
+
+.modal-content {
+    background-color: var(--background);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid var(--button-mine);
+    width: 80%;
+    max-width: 500px;
+    border-radius: 5px;
+    
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input,
+button {
+    padding: 5px;
+    font-size: 16px;
+}
+
+#registros {
+    margin-top: 20px;
+}
+
+.registro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0rem;
+    background-color: var(--input-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+}
+
+
 
 @media (max-width: 640px) {
     .container {
@@ -274,4 +381,3 @@ select {
         gap: 0.5rem;
     }
 }
-
