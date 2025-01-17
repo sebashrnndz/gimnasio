@@ -159,10 +159,11 @@ const modal = document.getElementById("miModal");
             const fecha = document.getElementById("fecha").value;
             
             registros.push({id: Date.now(), peso, fecha});
-            localStorage.setItem('registrosPeso', JSON.stringify(registros));
+            guardarRegistros();
             
             form.reset();
             mostrarRegistros();
+            actualizarGrafico();
         }
 
         function mostrarRegistros() {
@@ -177,17 +178,103 @@ const modal = document.getElementById("miModal");
                 registrosDiv.appendChild(div);
             });
 
-            document.querySelectorAll('.eliminar').forEach(button => {
+            document.querySelectorAll('.delete-button').forEach(button => {
                 button.onclick = function() {
-                    const id = this.getAttribute('data-id');
-                    registros = registros.filter(registro => registro.id != id);
-                    localStorage.setItem('registrosPeso', JSON.stringify(registros));
-                    mostrarRegistros();
+                    const id = parseInt(this.getAttribute('data-id'));
+                    borrarRegistro(id);
                 }
             });
         }
 
+        function borrarRegistro(id) {
+            registros = registros.filter(registro => registro.id !== id);
+            guardarRegistros();
+            mostrarRegistros();
+            actualizarGrafico();
+        }
+
+        function guardarRegistros() {
+            localStorage.setItem('registrosPeso', JSON.stringify(registros));
+        }
+
         function formatearFecha(fecha) {
-            const opciones = { year: 'numeric', month: 'long', day: 'numeric' };
+            const opciones = { year: 'numeric', month: 'numeric', day: 'numeric' };
             return new Date(fecha).toLocaleDateString('es-ES', opciones);
         }
+
+        // Mostrar registros al cargar la página
+        mostrarRegistros();
+        
+        
+
+
+
+
+        let chart;
+
+function actualizarGrafico() {
+    const ctx = document.getElementById('pesoChart').getContext('2d');
+    const datosOrdenados = registros.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+    
+    if (chart) {
+        chart.destroy();
+    }
+
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: datosOrdenados.map(r => formatearFecha(r.fecha)),
+            datasets: [{
+                label: 'Peso (kg)',
+                data: datosOrdenados.map(r => r.peso),
+                borderColor: 'rgb(16, 185, 207)',
+                tension: 0.5
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                }
+                
+            }
+        }
+    });
+}
+
+function verificarUltimoRegistro() {
+    if (registros.length > 0) {
+        const ultimoRegistro = new Date(registros[registros.length - 1].fecha);
+        const hoy = new Date();
+        const diferencia = hoy.getTime() - ultimoRegistro.getTime();
+        const diasTranscurridos = Math.floor(diferencia / (1000 * 3600 * 24));
+
+        if (diasTranscurridos >= 30) {
+            notificacionDiv.textContent = "¡Ha pasado un mes desde tu último registro de peso!";
+            notificacionDiv.style.display = "block";
+            setTimeout(() => {
+                notificacionDiv.style.display = "none";
+            }, 5000);
+        }
+    }
+}
+
+// Modificar la función form.onsubmit para incluir actualizarGrafico():
+// form.onsubmit = function(e) {
+//     // ... código existente ...
+//     actualizarGrafico();
+// }
+
+// Modificar la función borrarRegistro() para incluir actualizarGrafico():
+// function borrarRegistro(id) {
+//     // ... código existente ...
+//     actualizarGrafico();
+// }
+
+// Al final del script, añade:
+actualizarGrafico();
+verificarUltimoRegistro();
+
+// Verificar cada día
+setInterval(verificarUltimoRegistro, 24 * 60 * 60 * 1000);

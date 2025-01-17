@@ -19,6 +19,13 @@
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h2>Registro de Peso</h2>
+
+                    <div id="grafico">
+                        <canvas id="pesoChart"></canvas>
+                    </div>
+                    <div id="notificacion"></div>
+        
+
                     <form id="formPeso">
                         <label for="peso">Peso (kg):</label>
                         <input type="number" id="peso" step="0.1" required>
@@ -108,6 +115,8 @@
             <div id="exercises-list"></div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 </body>
 
